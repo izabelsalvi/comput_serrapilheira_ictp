@@ -10,29 +10,31 @@ cestes_files <- list.files(path = "data/raw/cestes",
                            pattern = "csv$",
                            full.names = TRUE)
 
-cestes_names <- gsub(".csv", "", basename(cestes_files), fixed = TRUE)
+cestes_names <- gsub(".csv", "", basename(cestes_files), fixed = TRUE) ##gsub is being used to replace csv with nothing , fixed = TRUE so it searches for dot(.), not the expression "dot"
 
 envir <- read.csv(cestes_files[3])
 
-data_list <- lapply(cestes_files, read.csv)
-names(data_list) <- cestes_names
+data_list <- lapply(cestes_files, read.csv) #apply -> apply a particular funtion to an object - we are taking this and applying to every elements of this vector
+names(data_list) <- cestes_names #we are naming the list
 
 length(data_list)
 
 # Inspecting data
 head(data_list$envir)
 dim(data_list$envir)
-summary(envir$envir)
+summary(data_list$envir)
 
 # Output 1: summary table ------------------------------------------------------
 
 # Creating summary table for all environmental variables
 sd(envir$Clay)
-envir_mean <- apply(envir[, -1], 2, mean)
+envir_mean <- apply(envir[, -1], 2, mean) #second argument is the dimention you want to aply, 1 its rows and 2 is columns
 envir_sd <- apply(envir[, -1], 2, sd)
 
 # Creating a function in R -----------------------------------------------------
-std <- function(x, round = FALSE, ...) {
+std <- function(x, round = FALSE, ...) {  ##creating a function that will peform an stantard error of a particular number
+                                          ##the default is false, the three dots - using a function inside a funtion
+
   std <- sd(x) / sqrt(length(x))
   if (round) std <- round(std, ...)
   return(std)
