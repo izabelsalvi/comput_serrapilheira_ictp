@@ -6,8 +6,10 @@
 #-----------------------------------------------------------#
 
 # loading needed packages
+install.packages("tidyverse")
 library(tidyverse)
 library(reshape2)
+install.packages("reshape2")
 
 
 # Reading the data in R ----
@@ -26,10 +28,10 @@ files_path
 file_names <- gsub(".csv", "", basename(files_path), fixed = TRUE)
 for (i in 1:length(files_path)) {
   data <- read.csv(files_path[[i]])
-  assign(file_names[i], data)
+  assign(file_names[i], data) ## assinging an objet to a name
 }
 
-
+ls()
 # Let's apply the `head()`, `dim()` and `summary()` functions to inspect all files. Try to understand based on the output and the help page (e.g.: `?head`) what each of the functions returns.
 
 # Understanding the object `comm`
@@ -93,13 +95,15 @@ envir$Sites <- as.factor(envir$Sites)
 
 # Let's do the same for the `Sites` variable of the `coord` object.
 coord$Sites <- as.factor(coord$Sites)
+class(coord$Sites)
 
 # Joining `coord` and `envir`
 
 # Let's then apply the `merge` function.
-envir_coord <- merge(x = envir,
+envir_coord <- merge(x = envir, #the default of merge is the inner joint
                      y = coord,
-                     by = "Sites")
+                     by = "Sites") # with we not specify the by, r will try to find a common column , but its better to specify it.
+#Also it only needs to have a common column, doesent matter if it is a factor, or numeric etc
 
 # We can check the join with the `dim()` and `head()` functions. How many columns should we have at the end? What columns were added?
 dim(envir)
@@ -120,7 +124,11 @@ n_sp <- nrow(splist)
 n_sp
 
 # creating table with each species in each area species in rows
-comm_df <- tidyr::pivot_longer(comm, cols = 2:ncol(comm), names_to = "TaxCode", values_to = "Abundance")
+comm_df <- tidyr::pivot_longer(comm, # two dots is specifing a function from x package ##pivot longer im taking something that is wide and making it longer
+                               cols = 2:ncol(comm),
+                               names_to = "TaxCode", #setting the names
+                               values_to = "Abundance")
+#now all my columns are rows, and the number the species x sites
 
 # Let's check the object's header and dimensions.
 dim(comm_df)
@@ -155,6 +163,8 @@ head(comm_traits)
 
 comm_total <- merge(comm_traits, envir_coord, by = "Sites")
 head(comm_total)
+
+if (!dir.exists("data/processed")) dir.create("data/processed")
 
 # Finally, we end our script writing the modified table. We will use the function `write.csv()`.
 write.csv(x = comm_total,
