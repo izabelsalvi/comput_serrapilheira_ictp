@@ -1,38 +1,6 @@
 ---
-title: "graphics"
-output: pdf_document
-date: '2022-07-14'
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-
-
----
 title: 'Exporting graphics using R'
-date: "July 7th 2022"
+date: "r Sys.Date()"
 output:
   html_document:
     df_print: paged
@@ -43,13 +11,13 @@ We will now reproduce the graphics we created in the Scientific Workflows lectur
 # Loading the package
 
 ```{r}
-library(ggplot2)
+library("ggplot2")
 ```
 
 
-# Reading the data
+# Reading the data #r steup is the name of the chunk of code 
 
-```{r setup}
+```{r setup} 
 comm <- read.csv("../data/raw/cestes/comm.csv")
 comm_sum <- sort(colSums(comm[, -1]), decreasing = TRUE)
 comm_df <- data.frame(sp = 1:length(comm_sum), n = comm_sum)
@@ -80,5 +48,10 @@ ggplot2::ggsave(filename = "../figs/species_abundance_ggplot.png",
                 units = "in", 
                 width = 3.5, 
                 height = 3.5)
+
+
+
+
+
 ```
 
