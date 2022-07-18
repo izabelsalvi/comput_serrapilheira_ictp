@@ -17,6 +17,8 @@ getwd()
 sqrt(10)
 round(3.14159)
 args(round) #important
+?args #argument list of a function - displays the argument names corresponding deafault
+#values of a function or a primitive
 ?round
 
 print("Hi!")
@@ -57,6 +59,8 @@ animals %in% more_animals #which animals are in more animal
 
 ## subset with grep ------------------------------------------------------------
 more_animals[grepl("^d", more_animals)]
+?grep #search for matches to arguments patterns
+
 
 ## ----recycling2---------------------------------------------------------------
 animals
@@ -82,7 +86,8 @@ levels(animals_cls) <- c("small", "medium", "large")
 animals_cls
 
 # Matrices
-set.seed(42)
+set.seed(42) #some kind of random number generation
+?set.seed
 matrix(runif(20), ncol = 2)
 
 matrix(nrow = 4, ncol = 3)
@@ -101,8 +106,10 @@ matrix(data = nums, nrow = 3, byrow = T, dimnames = names_matrix)
 
 m <- matrix(data = nums, nrow = 3, byrow = T, dimnames = names_matrix)
 
-dim(m)
+dim(m) #dimension of an object
+?dim
 dimnames(m)
+?dimnames()
 
 df <- data.frame(m)
 class(df)
