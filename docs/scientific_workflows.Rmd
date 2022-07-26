@@ -13,8 +13,8 @@ abstract: |
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-comm <- read.csv("../data/raw_cestes/comm.csv")
-envir <- read.csv("../data/raw_cestes/envir.csv")
+comm <- read.csv("../data/raw/cestes/comm.csv")
+envir <- read.csv("../data/raw/cestes/envir.csv")
 table <- read.csv("../output/02_envir_summary.csv")
 ```
 

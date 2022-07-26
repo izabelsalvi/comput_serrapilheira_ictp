@@ -6,3 +6,12 @@
 
 #Avoid adding html files
 *.html
+
+#you dont push shapefiles and rasters!!!
+*.shp
+*.zip
+*.shx
+*.dbf
+
+data/shapefiles
+data/raster
