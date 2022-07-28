@@ -66,8 +66,26 @@ World %>%
                 "Countries",
                 col = "red")
 
+
+install.packages("rnaturalearth")
+install.packages("remotes")
+remotes::install_github("ropensci/rnaturalearthhires")
+library(rnaturalearth)
+library(rnaturalearthhires)
+bra <- ne_states(country = "brazil", returnclass = "sf")
+plot(bra)
+
+
 ??recursive
 ?dir.create
 #recursive is true because im saving a subfile, to create a double path
 
-dir.create()
+dir.create("data/shapefiles", recursive = TRUE)
+st_write(obj = bra,
+         dsn = "data/shapefiles/bra.shp",
+         delete_layes = TRUE ) #if i want to overwrite i have to delete the previous |delete_dsn = T
+
+?st_write #write simple features object to file or database
+
+bra2 <-  read_sf("data/shapefiles/bra.shp")
+plot(bra2)
