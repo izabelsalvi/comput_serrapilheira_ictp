@@ -13,6 +13,7 @@
 *.shx
 *.dbf
 
+#or we can use this to remove specific files
 data/shapefiles
 data/raster
 
