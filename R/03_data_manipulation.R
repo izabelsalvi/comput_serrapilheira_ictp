@@ -16,6 +16,7 @@ install.packages("reshape2")
 
 # The files are all in .csv format, separated by commas. So let's use the `read.csv()` function. We could also use `read.table()` with the arguments `sep = ","` and `header = TRUE`
 # So let's read the five sets of data. A very useful function for reading data is the `list.files()` from the **base** package. This function lists files in a directory, based on a pattern.
+?list.files
 
 # We will apply the function to list all files in the directory `data` with the extension `.csv`.
 files_path <- list.files(path = "data/raw/cestes",
@@ -26,10 +27,15 @@ files_path
 
 # The `files_path` object is a vector of five elements (after all, there are five files) containing the full name of the file. Let's use the contents of this vector in the `read.csv()` function. We will use the a loop to read all data at once.
 file_names <- gsub(".csv", "", basename(files_path), fixed = TRUE)
+?gsub
+?basename #basename removes all of the path up to and including the last path separator (if any)
+
+
 for (i in 1:length(files_path)) {
   data <- read.csv(files_path[[i]])
-  assign(file_names[i], data) ## assinging an objet to a name
+  assign(file_names[i], data)
 }
+?ls() #list objects of the environmennt
 
 ls()
 # Let's apply the `head()`, `dim()` and `summary()` functions to inspect all files. Try to understand based on the output and the help page (e.g.: `?head`) what each of the functions returns.
@@ -59,7 +65,7 @@ head(traits)
 dim(traits)
 summary(traits)
 
-# Data summary
+### Data summary
 
 # How many species in the dataset? We can simply count the number of rows in `splist`.
 nrow(splist)
@@ -78,13 +84,17 @@ length(names(envir)[-1])
 
 # Let's use the `merge()` function from the __base__ package to add the coordinate column to the object containing the environmental variables. This function will combine two worksheets through a common identifier, which is the primary key. In the case of the `envir` object, the primary key is the `Sites` column that contains the number of the sampled locations. We can call this column using the `$` operator.
 envir$Sites
+summary(envir$Sites)
+
 
 # There are 97 areas. Let's see what happens when we use the `summary()` function.
 summary(envir$Sites)
 
 # Transforming variable types
 
-# In R, the `Sites` column that represents a categorical variable with the id of each area is being understood as a numeric variable. Let's convert this column to a factor, this way it will better represent the meaning of the variable which is simply the id of each area. For this we use the `factor()` function
+# In R, the `Sites` column that represents a categorical variable with the id of each area is being understood as a numeric variable.
+#Let's convert this column to a factor, this way it will better represent the meaning of the variable which is simply the id of each area.
+#For this we use the `factor()` function
 
 # if we get the class of this vector, we will see that it is numeric
 class(envir$Sites)
@@ -92,6 +102,7 @@ class(envir$Sites)
 as.factor(envir$Sites)
 # if we just use as.factor, we don't do the conversion, let's do an assignment
 envir$Sites <- as.factor(envir$Sites)
+class(envir$Sites)
 
 # Let's do the same for the `Sites` variable of the `coord` object.
 coord$Sites <- as.factor(coord$Sites)
@@ -100,6 +111,7 @@ class(coord$Sites)
 # Joining `coord` and `envir`
 
 # Let's then apply the `merge` function.
+?merge
 envir_coord <- merge(x = envir, #the default of merge is the inner joint
                      y = coord,
                      by = "Sites") # with we not specify the by, r will try to find a common column , but its better to specify it.
@@ -113,7 +125,11 @@ head(envir_coord)
 
 # Transforming a species matrix vs. area in a data table
 
-# Now, we want to transform our species vs. area on a worksheet that contains each __observation__ in a __row__ and each __variable__ in a __column__. Each observation is the abundance of a species in a given area. To do this transformation we will use the `gather()` function from the __tidyr__ package. As we have 97 sites and 56 species, we will end up with an object with 5432 lines (97 x 56).
+# Now, we want to transform our species vs. area on a worksheet
+#that contains each __observation__ in a __row__ and each __variable__ in a __column__.
+#Each observation is the abundance of a species in a given area.
+#To do this transformation we will use the `gather()` function from the __tidyr__ package. As we have 97 sites and 56 species,
+#we will end up with an object with 5432 lines (97 x 56).
 
 # vector containing all sites
 Sites <- envir$Sites
