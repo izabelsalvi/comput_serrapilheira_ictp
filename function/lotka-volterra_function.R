@@ -1,5 +1,6 @@
 #creating a function that represents the ode
 
+
 LVComp <-  function (t, y, p) {
   N <- y
   with(as.list(p), {
