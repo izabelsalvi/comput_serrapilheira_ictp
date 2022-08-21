@@ -30,7 +30,6 @@ head(World)
 names(World)
 class(World)
 dplyr::glimpse(World)
-dplyr::glimpse(World)
 
 plot(World[,1])
 plot(World[1]) #everything
@@ -47,6 +46,18 @@ World$geometry
 head(sf::st_coordinates(World))
 
 no_geom <-  sf::st_drop_geometry(World)
+head(no_geom)
+class(no_geom)
+class(World)
+
+#bounding boxes
+st_bbox(World)
+
+
+##Manipulating objects
+
+unique(World$continent)
+
 
 World %>%
   filter(continent == "South America") %>%
@@ -66,6 +77,8 @@ World %>%
                 "Countries",
                 col = "red")
 
+
+##Loading, plotting, and saving a shapefile from the disk
 
 install.packages("rnaturalearth")
 install.packages("remotes")
@@ -89,3 +102,24 @@ st_write(obj = bra,
 
 bra2 <-  read_sf("data/shapefiles/bra.shp")
 plot(bra2)
+
+
+##Loading plotting and saving a raster from disk
+
+library(raster)
+dir.create(path = "data/raster/", recursive = TRUE)
+tmax_data <- getData(name = "worldclim", var = "tmax", res = 10, path = "data/raster/")
+plot(tmax_data)
+
+is(tmax_data) #the data are a raster stack, several rasters piled
+
+dim(tmax_data)
+extent(tmax_data)
+res(tmax_data)
+
+??rspatialdata
+
+#| eval: false
+library(RColorBrewer)
+display.brewer.all()
+display.brewer.all(type = "div")
