@@ -185,7 +185,7 @@ if (!dir.exists("data/processed")) dir.create("data/processed")
 # Finally, we end our script writing the modified table. We will use the function `write.csv()`.
 write.csv(x = comm_total,
           file = "data/processed/03_Pavoine_full_table.csv",
-          row.names = FALSE)
+          row.names = TRUE)
 
 # Extra: filter ----------------------------------------------------------------
 sp1 <- filter(comm_total, TaxCode == "sp1", Elev > 3)
