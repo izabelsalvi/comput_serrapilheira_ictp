@@ -125,4 +125,34 @@ myrsine.new.geo <-  clean_coordinates(x = myrsine.coord,
                                       lon = "decimalLongitude",
                                       lat = "decimalLatitude", )
 
+table(myrsine.new.geo$.summary)
+
+tail(names(myrsine.new.geo))
+
+#merge the raw data with the cleaned data
+# merging w/ original data
+myrsine.new.geo2 <- merge(myrsine.data, myrsine.new.geo,
+                          all.x = TRUE)
+dim(myrsine.new.geo2)
+
+plot(decimalLatitude ~ decimalLongitude, data = myrsine.new.geo, asp = 1)
+map(, , , add = TRUE)
+
+#Exporting the data after coordinate check
+plot(decimalLatitude ~ decimalLongitude, data = myrsine.new.geo2, asp = 1,
+     col = if_else(myrsine.new.geo2$.summary, "green", "red"))
+map(, , , add = TRUE)
+
+#save the dataset as a shapefile
+library(tmap)
+library(sf)
+myrsine.final <- left_join(myrsine.coord, myrsine.new.geo2)
+nrow(myrsine.final)
+
+myrsine_sf <- st_as_sf(myrsine.final, coords = c("decimalLongitude", "decimalLatitude"))
+st_crs(myrsine_sf)
+
+myrsine_sf <- st_set_crs(myrsine_sf, 4326)
+st_crs(myrsine_sf)
+
 ##TMAP MODE
