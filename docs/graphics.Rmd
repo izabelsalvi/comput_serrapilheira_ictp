@@ -42,7 +42,7 @@ p <- ggplot(comm_df) +
 
 ```{r, fig.alt='Species rank-abundance curve. On x-axis species are ranked from the most abundant to the least abundant. On y-axis the number of individuals of each species. The curve has a long tail due to lots of rare species and only two species that are very abundant: Bolboschoenus maritimus with 126 individuals and Phalaris coerulescenss with 79 individuals.'}
 
-p
+
 ggplot2::ggsave(filename = "../figs/species_abundance_ggplot.png", 
                 dpi = 300, 
                 units = "in", 
