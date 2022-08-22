@@ -156,3 +156,11 @@ myrsine_sf <- st_set_crs(myrsine_sf, 4326)
 st_crs(myrsine_sf)
 
 ##TMAP MODE
+RColorBrewer::brewer.pal(7, "RdBu")
+library(tmap)
+data(World)
+?tmap
+tm_shape(World) +
+  tm_polygons("HPI", palette ="-YlGn")
+
+tmaptools::palette_explorer()
