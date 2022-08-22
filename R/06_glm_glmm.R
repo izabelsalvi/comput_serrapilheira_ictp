@@ -80,17 +80,17 @@ bac$cabinet <- as.factor(bac$cabinet)
 
 bac_lm <- lm(growth ~ media, data = bac)
 
-ummary(bac_lm)
+summary(bac_lm)
 
 
-ac_lm2 <- lm(growth ~ media + cabinet, data = bac)
+bac_lm2 <- lm(growth ~ media + cabinet, data = bac)
 
-ummary(bac_lm2)
+summary(bac_lm2)
 
 
 # Building the mixed model with cabined as a random effect#ac_lmer <- lmer(growth ~ media + (1 | cabinet), data = bac)
 
-ummary(bac_lmer)
+summary(bac_lmer)
 
 
 ## -Simulating the confidence interval of the residualsfeEx <- FEsim(bac_lmer, 1000)
